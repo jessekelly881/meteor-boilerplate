@@ -11,7 +11,9 @@ const LoginForm = () => {
     const submit = e => {
         e.preventDefault();
 
-        Meteor.loginWithPassword(username, password);
+        Meteor.loginWithPassword(username, password, x =>
+            alert(JSON.stringify(x)),
+        );
     };
 
     return (
