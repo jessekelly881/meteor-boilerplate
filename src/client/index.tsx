@@ -1,4 +1,5 @@
 import { Meteor } from "meteor/meteor";
+import { init as startSessionTimeout } from "meteor/simonsimcity:client-session-timeout";
 import { useTracker } from "meteor/react-meteor-data";
 import React from "react";
 import { render } from "react-dom";
@@ -16,6 +17,8 @@ import ForgotPassData, {
 import { AutoForm } from "uniforms-unstyled";
 import { Accounts } from "meteor/accounts-base";
 
+const minToMs = (n: number) => 1000 * n;
+
 const loginSchema = new JSONSchemaBridge(LoginData, loginDataValidator);
 const signupSchema = new JSONSchemaBridge(SignupData, signupDataValidator);
 const forgotPassSchema = new JSONSchemaBridge(
@@ -26,8 +29,8 @@ const forgotPassSchema = new JSONSchemaBridge(
 const LoginForm = () => {
     const user = useTracker(() => Meteor.user());
 
-    const login = ({ username, password }): LoginData => {
-        Meteor.loginWithPassword(username, password, x =>
+    const login = ({ email, password }): LoginData => {
+        Meteor.loginWithPassword(email, password, x =>
             alert(JSON.stringify(x)),
         );
     };
@@ -66,3 +69,6 @@ const LoginForm = () => {
 Meteor.startup(() => {
     render(<LoginForm />, document.getElementById("app"));
 });
+
+// Enable session timeout
+startSessionTimeout({ expiryTime: minToMs(15) });
