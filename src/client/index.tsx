@@ -13,6 +13,7 @@ import SignupData, {
 import ForgotPassData, {
     validator as forgotPassDataValidator,
 } from "/src/common/types/forgotPassData";
+import "./serviceWorker.js";
 
 import { AutoForm } from "uniforms-unstyled";
 import { Accounts } from "meteor/accounts-base";
