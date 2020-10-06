@@ -1,34 +1,14 @@
-import Ajv from "ajv";
 import { Meteor } from "meteor/meteor";
 import { useTracker } from "meteor/react-meteor-data";
 import React from "react";
 import { render } from "react-dom";
 import { JSONSchemaBridge } from "uniforms-bridge-json-schema";
+import LoginData, {
+    validator as loginDataValidator,
+} from "/src/lib/types/loginData";
 import { AutoForm } from "uniforms-unstyled";
 
-const loginSchema = {
-    title: "Login",
-    type: "object",
-    properties: {
-        username: { type: "string" },
-        password: { type: "string" },
-    },
-    required: ["username", "password"],
-};
-
-const ajv = new Ajv({ allErrors: true, useDefaults: true });
-
-function createValidator(schema: object) {
-    const validator = ajv.compile(schema);
-
-    return (model: object) => {
-        validator(model);
-        return validator.errors?.length ? { details: validator.errors } : null;
-    };
-}
-
-const schemaValidator = createValidator(loginSchema);
-const bridge = new JSONSchemaBridge(loginSchema, schemaValidator);
+const loginSchema = new JSONSchemaBridge(LoginData, loginDataValidator);
 
 const LoginForm = () => {
     const user = useTracker(() => Meteor.user());
@@ -41,7 +21,7 @@ const LoginForm = () => {
 
     return (
         <>
-            <AutoForm schema={bridge} onSubmit={login} />
+            <AutoForm schema={loginSchema} onSubmit={login} />
             <button onClick={Meteor.logout}>Logout</button>
             <span>{user?.username || "Anon"}</span>
         </>

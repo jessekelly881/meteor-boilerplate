@@ -9,6 +9,11 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
+"@sinclair/typebox@^0.10.1":
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/@sinclair/typebox/-/typebox-0.10.1.tgz#5239a7f3b3e51bab3c2838550639350126746079"
+  integrity sha512-IZK7ao3ef92oZ5TjTwjVm9Xx65P2rj3frp7Fc58qy+pN+EL5gtv9mJWSQ5lcUWOWKNIOeOdTYjMPhg86rWGq2Q==
+
 "@types/prop-types@*":
   version "15.7.3"
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.3.tgz#2ab0d5da2e5815f94b0b9d4b95d1e5f243ab2ca7"
@@ -508,6 +513,11 @@ invariant@^2.0.0:
   integrity sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==
   dependencies:
     loose-envify "^1.0.0"
+
+io-ts-codegen@^0.4.5:
+  version "0.4.5"
+  resolved "https://registry.yarnpkg.com/io-ts-codegen/-/io-ts-codegen-0.4.5.tgz#67a5e0e0d72751451ab6c2c70e2f304408f398de"
+  integrity sha512-7Q6CbNyYOIelPt2OddqMIk5jGfUM5Z+Y2OSsPAJnaSRroCwedAp0cFNh5h02nsE/33P9xjyGhKTajMkPApEdcA==
 
 is-fullwidth-code-point@^1.0.0:
   version "1.0.0"
