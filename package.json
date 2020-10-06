@@ -12,11 +12,15 @@
         "@babel/runtime": "^7.11.2",
         "@types/react": "^16.9.49",
         "@types/react-dom": "^16.9.8",
+        "ajv": "^6.12.5",
         "bcrypt": "^5.0.0",
         "meteor": "meteor/meteor",
         "meteor-node-stubs": "^1.0.1",
         "react": "^16.13.1",
-        "react-dom": "^16.13.1"
+        "react-dom": "^16.13.1",
+        "uniform": "^0.5.1",
+        "uniforms-bridge-json-schema": "^3.0.0-rc.5",
+        "uniforms-unstyled": "^3.0.0-rc.5"
     },
     "meteor": {
         "mainModule": {

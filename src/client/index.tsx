@@ -1,16 +1,39 @@
-import React, { useState } from "react";
+import Ajv from "ajv";
 import { Meteor } from "meteor/meteor";
 import { useTracker } from "meteor/react-meteor-data";
+import React from "react";
 import { render } from "react-dom";
+import { JSONSchemaBridge } from "uniforms-bridge-json-schema";
+import { AutoForm } from "uniforms-unstyled";
+
+const loginSchema = {
+    title: "Login",
+    type: "object",
+    properties: {
+        username: { type: "string" },
+        password: { type: "string" },
+    },
+    required: ["username", "password"],
+};
+
+const ajv = new Ajv({ allErrors: true, useDefaults: true });
+
+function createValidator(schema: object) {
+    const validator = ajv.compile(schema);
+
+    return (model: object) => {
+        validator(model);
+        return validator.errors?.length ? { details: validator.errors } : null;
+    };
+}
+
+const schemaValidator = createValidator(loginSchema);
+const bridge = new JSONSchemaBridge(loginSchema, schemaValidator);
 
 const LoginForm = () => {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
     const user = useTracker(() => Meteor.user());
 
-    const submit = e => {
-        e.preventDefault();
-
+    const login = ({ username, password }) => {
         Meteor.loginWithPassword(username, password, x =>
             alert(JSON.stringify(x)),
         );
@@ -18,29 +41,7 @@ const LoginForm = () => {
 
     return (
         <>
-            <form onSubmit={submit} className="login-form">
-                <label htmlFor="username">Username</label>
-
-                <input
-                    type="text"
-                    placeholder="Username"
-                    name="username"
-                    required
-                    onChange={e => setUsername(e.target.value)}
-                />
-
-                <label htmlFor="password">Password</label>
-
-                <input
-                    type="password"
-                    placeholder="Password"
-                    name="password"
-                    required
-                    onChange={e => setPassword(e.target.value)}
-                />
-
-                <button type="submit">Log In</button>
-            </form>
+            <AutoForm schema={bridge} onSubmit={login} />
             <button onClick={Meteor.logout}>Logout</button>
             <span>{user?.username || "Anon"}</span>
         </>
