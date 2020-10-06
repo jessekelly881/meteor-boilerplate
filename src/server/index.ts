@@ -1,7 +1,11 @@
 import { Meteor } from "meteor/meteor";
 import { Accounts } from "meteor/accounts-base";
 
-const SEED_USERNAME = "meteorite";
+Accounts.config({
+    sendVerificationEmail: true,
+});
+
+const SEED_USERNAME = "meteorite@m.com";
 const SEED_PASSWORD = "password";
 
 Meteor.startup(() => {
