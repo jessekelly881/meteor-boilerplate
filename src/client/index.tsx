@@ -14,6 +14,21 @@ import ForgotPassData, {
     validator as forgotPassDataValidator,
 } from "/src/common/types/forgotPassData";
 import "./serviceWorker.js";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+
+const AppRouter = () => (
+    <Router>
+        <Switch>
+            <Route exact path="/">
+                <span>Home</span>
+                <Link to="/about">See: About</Link>
+            </Route>
+            <Route exact path="/about">
+                <span>About</span>
+            </Route>
+        </Switch>
+    </Router>
+);
 
 import { AutoForm } from "uniforms-unstyled";
 import { Accounts } from "meteor/accounts-base";
@@ -68,7 +83,7 @@ const LoginForm = () => {
 };
 
 Meteor.startup(() => {
-    render(<LoginForm />, document.getElementById("app"));
+    render(<AppRouter />, document.getElementById("app"));
 });
 
 // Enable session timeout
