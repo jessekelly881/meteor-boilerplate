@@ -23,3 +23,5 @@ react-meteor-data       # React higher-order component for reactively tracking M
 accounts-password
 simonsimcity:client-session-timeout
 force-ssl
+omega:meteor-desktop-watcher@=2.2.5
+omega:meteor-desktop-bundler@=2.2.5
