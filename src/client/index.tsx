@@ -16,24 +16,8 @@ import ForgotPassData, {
 import "./serviceWorker.js";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-const AppRouter = () => (
-    <Router>
-        <Switch>
-            <Route exact path="/">
-                <span>Home</span>
-                <Link to="/about">See: About</Link>
-            </Route>
-            <Route exact path="/about">
-                <span>About</span>
-            </Route>
-        </Switch>
-    </Router>
-);
-
 import { AutoForm } from "uniforms-unstyled";
 import { Accounts } from "meteor/accounts-base";
-
-const minToMs = (n: number) => 1000 * n;
 
 const loginSchema = new JSONSchemaBridge(LoginData, loginDataValidator);
 const signupSchema = new JSONSchemaBridge(SignupData, signupDataValidator);
@@ -42,49 +26,66 @@ const forgotPassSchema = new JSONSchemaBridge(
     forgotPassDataValidator,
 );
 
-const LoginForm = () => {
+const login = ({ email, password }): LoginData => {
+    Meteor.loginWithPassword(email, password, x => alert(JSON.stringify(x)));
+};
+
+const signup = ({ email, password }: SignupData) =>
+    Accounts.createUser({
+        email,
+        username: email,
+        password,
+    });
+
+const forgotPass = ({ email }: ForgotPassData) =>
+    Accounts.forgotPassword({ email });
+
+const AppRouter = () => (
+    <Router>
+        <Switch>
+            <Route exact path="/">
+                <span>Home</span>
+                <Link to="/login">Login</Link>
+            </Route>
+            <Route exact path="/login">
+                <h2>Login</h2>
+                <AutoForm schema={loginSchema} onSubmit={login} />
+                <Link to="/signup">Signup</Link>
+                &nbsp;
+                <Link to="/forgot-pass">Forgot pass</Link>
+            </Route>
+            <Route exact path="/signup">
+                <h2>Signup</h2>
+                <AutoForm schema={signupSchema} onSubmit={signup} />
+                <Link to="/login">Login</Link>
+            </Route>
+            <Route exact path="/forgot-pass">
+                <h2>Forgot pass</h2>
+                <AutoForm schema={forgotPassSchema} onSubmit={forgotPass} />
+                <Link to="/login">Login</Link>
+            </Route>
+        </Switch>
+    </Router>
+);
+
+const App = () => {
     const user = useTracker(() => Meteor.user());
-
-    const login = ({ email, password }): LoginData => {
-        Meteor.loginWithPassword(email, password, x =>
-            alert(JSON.stringify(x)),
-        );
-    };
-
-    const forgotPass = ({ email }: ForgotPassData) =>
-        Accounts.forgotPassword({ email });
-
-    const signup = ({ email, password }: SignupData) =>
-        Accounts.createUser({
-            email,
-            username: email,
-            password,
-        });
 
     return (
         <>
             <span>{user?.username || "Anon"}</span>
             &nbsp;
             <button onClick={Meteor.logout}>Logout</button>
-            <br />
-            <br />
-            <h2>Login</h2>
-            <AutoForm schema={loginSchema} onSubmit={login} />
-            <br />
-            <br />
-            <h2>Signup</h2>
-            <AutoForm schema={signupSchema} onSubmit={signup} />
-            <br />
-            <br />
-            <h2>Forgot pass</h2>
-            <AutoForm schema={forgotPassSchema} onSubmit={forgotPass} />
+            <hr />
+            <AppRouter />
         </>
     );
 };
 
 Meteor.startup(() => {
-    render(<AppRouter />, document.getElementById("app"));
+    render(<App />, document.getElementById("app"));
 });
 
 // Enable session timeout
+const minToMs = (n: number) => 1000 * n;
 startSessionTimeout({ expiryTime: minToMs(15) });
