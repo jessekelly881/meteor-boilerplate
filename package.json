@@ -3,7 +3,7 @@
     "private": true,
     "scripts": {
         "start": "meteor run",
-        "build": "meteor build --directory dist",
+        "build": "meteor build --directory dist --server=https://localhost:3000",
         "test": "meteor test --once --driver-package meteortesting:mocha",
         "test-app": "TEST_WATCH=1 meteor test --full-app --driver-package meteortesting:mocha",
         "visualize": "meteor --production --extra-packages bundle-visualizer"
