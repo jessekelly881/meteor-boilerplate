@@ -2,6 +2,5 @@ node_modules/
 dist/
 
 version.desktop
-.desktop
 .desktop-installer
 .desktop-package
