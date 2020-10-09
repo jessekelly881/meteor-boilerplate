@@ -1,7 +1,7 @@
 import { Meteor } from "meteor/meteor";
 import { init as startSessionTimeout } from "meteor/simonsimcity:client-session-timeout";
 import { useTracker } from "meteor/react-meteor-data";
-import React from "react";
+import React, { useState } from "react";
 import { render } from "react-dom";
 import { JSONSchemaBridge } from "uniforms-bridge-json-schema";
 import LoginData, {
@@ -19,6 +19,28 @@ import "normalize.css";
 
 import { AutoForm } from "uniforms-unstyled";
 import { Accounts } from "meteor/accounts-base";
+
+import i18n from "meteor/universe:i18n";
+
+i18n.addTranslations("en-US", "Common", {
+    hello: "Hello {$name} {$0}!",
+});
+
+i18n.addTranslations("es-MX", "Common", {
+    hello: "Hello {$name} {$0}!",
+});
+
+interface Lang {
+    code: string;
+    nativeName: string;
+}
+
+// getLangs :: () => String
+const getLangs = (): Lang[] =>
+    i18n.getLanguages().map((code: String) => ({
+        code,
+        nativeName: i18n.getLanguageNativeName(code),
+    }));
 
 const loginSchema = new JSONSchemaBridge(LoginData, loginDataValidator);
 const signupSchema = new JSONSchemaBridge(SignupData, signupDataValidator);
@@ -72,12 +94,22 @@ const AppRouter = () => (
 
 const App = () => {
     const user = useTracker(() => Meteor.user());
+    const [locale, setLocale] = useState(i18n.getLocale());
+
+    i18n.onChangeLocale(setLocale);
 
     return (
         <>
             <span>{user?.username || "Anon"}</span>
-            &nbsp;
             <button onClick={Meteor.logout}>Logout</button>
+            &nbsp; Locale: {i18n.getLanguageNativeName(locale)}
+            <select onChange={e => i18n.setLocale(e.target.value)}>
+                {getLangs().map((lang: Lang) => (
+                    <option key={lang.code} value={lang.code}>
+                        {lang.nativeName}
+                    </option>
+                ))}
+            </select>
             <hr />
             <AppRouter />
         </>
@@ -91,3 +123,11 @@ Meteor.startup(() => {
 // Enable session timeout
 const minToMs = (n: number) => 1000 * n;
 startSessionTimeout({ expiryTime: minToMs(15) });
+
+// getBrowserLang :: () => String
+const getBrowserLang = () =>
+    (navigator.languages && navigator.languages[0]) ||
+    navigator.language ||
+    "en-US";
+
+i18n.setLocale(getBrowserLang());
