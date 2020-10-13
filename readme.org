@@ -9,3 +9,13 @@
     - English(US)
     - Spanish(MX)
 - [] Language settings synced between frontend and backend.
+
+
+** Multiplatfirm
+- [X] Compiles natively to iOS, Android, Windows, Mac, and Linux
+- Full setup for cordova plugins:
+    - cordova-plugin-inappbrowser
+
+** Code Quality
+- Written in typescript with strict type checking
+- Written in a dry, FP style
