@@ -84,12 +84,6 @@ const AppRouter = () => (
     </Router>
 );
 
-// getBrowserLang :: () => String
-const getBrowserLang = () =>
-    (navigator.languages && navigator.languages[0]) ||
-    navigator.language ||
-    "en-US";
-
 const App = () => {
     const user = useTracker(() => Meteor.user());
     const [locale, setLocale] = useState(i18n.getLocale());

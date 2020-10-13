@@ -3,6 +3,9 @@
  * Module for handling everything related to i18n translations.
  */
 
+import { fromNullable, Option } from "fp-ts/Option";
+import { pipe } from "fp-ts/function";
+
 import "./trans/common/en-us.i18n.yml";
 import "./trans/common/es-mx.i18n.yml";
 
@@ -26,3 +29,13 @@ export const getLang = () => defaultLang;
  *
  */
 export const setLang = (lang: string) => false;
+
+/**
+ * getBrowserLang :: () => Option String
+ * Returns the browser language, if set.
+ */
+export const getBrowserLang = (): Option<String> =>
+    pipe(
+        (navigator.languages && navigator.languages[0]) || navigator.language,
+        fromNullable,
+    );
