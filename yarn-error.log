@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/bin/yarn add n9ormalize.css
+  /usr/local/bin/node /usr/bin/yarn start
 
 PATH: 
   /home/jesse/.bin:/home/jesse/.local/bin:/home/jesse/dev/projects/notes:/home/jesse/.config/scripts:/home/jesse/.gem/ruby/2.7.0/bin:/home/jesse/.deno/bin:/home/jesse/.bin:/home/jesse/.local/bin:/home/jesse/dev/projects/notes:/home/jesse/.config/scripts:/home/jesse/.gem/ruby/2.7.0/bin:/home/jesse/.deno/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/opt/android-sdk/platform-tools:/opt/android-sdk/tools:/opt/android-sdk/tools/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/var/lib/snapd/snap/bin:/opt/android-sdk/tools:/opt/android-sdk/platform-tools:/opt/tools:/opt/gradle/gradle-4.10.2/bin:/home/jesse/.gitscripts:/home/jesse/.scripts:/opt/android-sdk/platform-tools:/opt/android-sdk/tools:/opt/android-sdk/tools/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/opt/android-sdk/tools:/opt/android-sdk/platform-tools:/opt/tools:/opt/gradle/gradle-4.10.2/bin:/home/jesse/.gitscripts:/home/jesse/.scripts
@@ -14,36 +14,57 @@ Platform:
   linux x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/n9ormalize.css: Not found
-      at Request.params.callback [as _callback] (/usr/lib/node_modules/yarn/lib/cli.js:66988:18)
-      at Request.self.callback (/usr/lib/node_modules/yarn/lib/cli.js:140749:22)
-      at Request.emit (events.js:315:20)
-      at Request.<anonymous> (/usr/lib/node_modules/yarn/lib/cli.js:141721:10)
-      at Request.emit (events.js:315:20)
-      at IncomingMessage.<anonymous> (/usr/lib/node_modules/yarn/lib/cli.js:141643:12)
-      at Object.onceWrapper (events.js:421:28)
-      at IncomingMessage.emit (events.js:327:22)
-      at endReadableNT (_stream_readable.js:1220:12)
-      at processTicksAndRejections (internal/process/task_queues.js:84:21)
+  SyntaxError: /home/jesse/proj/work/.common/fullstackapp/package.json: Unexpected end of JSON input
+      at JSON.parse (<anonymous>)
+      at /usr/lib/node_modules/yarn/lib/cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (/usr/lib/node_modules/yarn/lib/cli.js:310:30)
+      at /usr/lib/node_modules/yarn/lib/cli.js:321:13
 
 npm manifest: 
   {
-      "name": "meteor",
-      "private": true,
-      "scripts": {
-          "start": "meteor run",
-          "start:desktop": "meteor-desktop -b",
-          "start:android": "meteor run android-device",
-          "build": "meteor build --directory dist --server=https://localhost:3000",
-          "build:desktop": "meteor-desktop build-installer -b",
-          "test": "meteor test --once --driver-package meteortesting:mocha",
-          "test-app": "TEST_WATCH=1 meteor test --full-app --driver-package meteortesting:mocha",
-          "visualize": "meteor --production --extra-packages bundle-visualizer",
-          "desktop": "meteor-desktop"
+    "name": "meteor",
+    "private": true,
+    "scripts": {
+      "start": "meteor run",
+      "start:desktop": "meteor-desktop -b",
+      "start:android": "meteor run android-device",
+      "build": "meteor build --directory dist --server=https://localhost:3000",
+      "build:desktop": "meteor-desktop build-installer -b",
+      "test": "meteor test --once --driver-package meteortesting:mocha",
+      "test-app": "TEST_WATCH=1 meteor test --full-app --driver-package meteortesting:mocha",
+      "visualize": "meteor --production --extra-packages bundle-visualizer",
+      "desktop": "meteor-desktop"
+    },
+    "dependencies": {
+      "@babel/runtime": "^7.11.2",
+      "@sinclair/typebox": "^0.10.1",
+      "@types/meteor-universe-i18n": "^1.14.5",
+      "@types/react": "^16.9.49",
+      "@types/react-dom": "^16.9.8",
+      "ajv": "^6.12.5",
+      "bcrypt": "^5.0.0",
+      "electron-packager": "^15.1.0",
+      "io-ts-codegen": "^0.4.5",
+      "meteor": "meteor/meteor",
+      "meteor-node-stubs": "^1.0.1",
+      "react": "^16.13.1",
+      "react-dom": "^16.13.1",
+      "react-router": "^5.2.0",
+      "react-router-dom": "^5.2.0",
+      "uniform": "^0.5.1",
+      "uniforms-bridge-json-schema": "^3.0.0-rc.5",
+      "uniforms-unstyled": "^3.0.0-rc.5"
+    },
+    "meteor": {
+      "mainModule": {
+        "client": "src/client/index.tsx",
+        "server": "src/server/index.ts"
       },
       "dependencies": {
           "@babel/runtime": "^7.11.2",
           "@sinclair/typebox": "^0.10.1",
+          "@types/meteor-universe-i18n": "^1.14.5",
           "@types/react": "^16.9.49",
           "@types/react-dom": "^16.9.8",
           "ajv": "^6.12.5",
@@ -52,6 +73,7 @@ npm manifest:
           "io-ts-codegen": "^0.4.5",
           "meteor": "meteor/meteor",
           "meteor-node-stubs": "^1.0.1",
+          "normalize.css": "^8.0.1",
           "react": "^16.13.1",
           "react-dom": "^16.13.1",
           "react-router": "^5.2.0",
@@ -797,6 +819,14 @@ Lockfile:
     dependencies:
       "@types/minimatch" "*"
       "@types/node" "*"
+  
+  "@types/meteor-universe-i18n@^1.14.5":
+    version "1.14.5"
+    resolved "https://registry.yarnpkg.com/@types/meteor-universe-i18n/-/meteor-universe-i18n-1.14.5.tgz#c4234cc99d3c25a130e5c4dc52330c83c69de68d"
+    integrity sha512-0pSTfUjs3+MG+uDTFqAmusi0q7n5Q7HF2r4lGDg7Nf76NkopRanL8hXYbYOgs2gSKopgyCB/9CLipLAoVwZkCg==
+    dependencies:
+      "@types/node" "*"
+      "@types/react" "*"
   
   "@types/minimatch@*":
     version "3.0.3"
@@ -3355,6 +3385,11 @@ Lockfile:
     version "4.5.0"
     resolved "https://registry.yarnpkg.com/normalize-url/-/normalize-url-4.5.0.tgz#453354087e6ca96957bd8f5baf753f5982142129"
     integrity sha512-2s47yzUxdexf1OhyRi4Em83iQk0aPvwTddtFz4hnSSw9dCEsLEGf6SwIO8ss/19S9iBb5sJaOuTvTGDeZI00BQ==
+  
+  normalize.css@^8.0.1:
+    version "8.0.1"
+    resolved "https://registry.yarnpkg.com/normalize.css/-/normalize.css-8.0.1.tgz#9b98a208738b9cc2634caacbc42d131c97487bf3"
+    integrity sha512-qizSNPO93t1YUuUhP22btGOo3chcvDFqFaj2TRybP0DMxkHOCTYwp3n34fel4a31ORXy4m1Xq0Gyqpb5m33qIg==
   
   npm-bundled@^1.0.1:
     version "1.1.1"
