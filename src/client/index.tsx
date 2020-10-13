@@ -19,21 +19,11 @@ import "normalize.css";
 
 import { AutoForm } from "uniforms-unstyled";
 import { Accounts } from "meteor/accounts-base";
-
 import i18n from "meteor/universe:i18n";
+import { Lang, getLang } from "/src/common/i18n";
 
-i18n.addTranslations("en-US", "Common", {
-    hello: "Hello {$name} {$0}!",
-});
-
-i18n.addTranslations("es-MX", "Common", {
-    hello: "Hello {$name} {$0}!",
-});
-
-interface Lang {
-    code: string;
-    nativeName: string;
-}
+console.log(getLang());
+const t = i18n.__;
 
 // getLangs :: () => String
 const getLangs = (): Lang[] =>
@@ -72,21 +62,21 @@ const AppRouter = () => (
                 <Link to="/login">Login</Link>
             </Route>
             <Route exact path="/login">
-                <h2>Login</h2>
+                <h2>{t("login")}</h2>
                 <AutoForm schema={loginSchema} onSubmit={login} />
-                <Link to="/signup">Signup</Link>
+                <Link to="/signup">{t("signup")}</Link>
                 &nbsp;
-                <Link to="/forgot-pass">Forgot pass</Link>
+                <Link to="/forgot-pass">{t("forgotPass")}</Link>
             </Route>
             <Route exact path="/signup">
-                <h2>Signup</h2>
+                <h2>{t("signup")}</h2>
                 <AutoForm schema={signupSchema} onSubmit={signup} />
-                <Link to="/login">Login</Link>
+                <Link to="/login">{t("login")}</Link>
             </Route>
             <Route exact path="/forgot-pass">
-                <h2>Forgot pass</h2>
+                <h2>{t("forgotPass")}</h2>
                 <AutoForm schema={forgotPassSchema} onSubmit={forgotPass} />
-                <Link to="/login">Login</Link>
+                <Link to="/login">{t("login")}</Link>
             </Route>
         </Switch>
     </Router>
@@ -101,7 +91,7 @@ const App = () => {
     return (
         <>
             <span>{user?.username || "Anon"}</span>
-            <button onClick={Meteor.logout}>Logout</button>
+            <button onClick={Meteor.logout}>{t("logout")}</button>
             &nbsp; Locale: {i18n.getLanguageNativeName(locale)}
             <select onChange={e => i18n.setLocale(e.target.value)}>
                 {getLangs().map((lang: Lang) => (

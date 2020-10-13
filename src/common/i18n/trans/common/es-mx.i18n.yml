@@ -1,0 +1,13 @@
+##
+# Nouns
+##
+userName: Nombre de usario
+email: Coreo
+
+##
+# Verbs
+##
+logout: Ciere session
+login: Iniciar
+signup: Signup es
+forgotPass: Olvide mi contrasena
