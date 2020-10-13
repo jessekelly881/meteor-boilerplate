@@ -36,6 +36,7 @@ const signup = ({ email, password }: SignupData) =>
         email,
         username: email,
         password,
+        profile: {},
     });
 
 const forgotPass = ({ email }: ForgotPassData) =>
