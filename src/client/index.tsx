@@ -48,7 +48,9 @@ const signup = ({ email, password }: SignupData) =>
         email,
         username: email,
         password,
-        profile: {},
+        profile: {
+            locale: i18n.getLocale(),
+        },
     });
 
 const forgotPass = ({ email }: ForgotPassData) =>
@@ -82,11 +84,29 @@ const AppRouter = () => (
     </Router>
 );
 
+// getBrowserLang :: () => String
+const getBrowserLang = () =>
+    (navigator.languages && navigator.languages[0]) ||
+    navigator.language ||
+    "en-US";
+
 const App = () => {
     const user = useTracker(() => Meteor.user());
     const [locale, setLocale] = useState(i18n.getLocale());
 
     i18n.onChangeLocale(setLocale);
+
+    i18n.onChangeLocale((locale: string) => {
+        if (user) {
+            Meteor.users.update(Meteor.userId(), {
+                $set: {
+                    profile: {
+                        locale,
+                    },
+                },
+            });
+        }
+    });
 
     return (
         <>
@@ -113,11 +133,3 @@ Meteor.startup(() => {
 // Enable session timeout
 const minToMs = (n: number) => 1000 * n;
 startSessionTimeout({ expiryTime: minToMs(15) });
-
-// getBrowserLang :: () => String
-const getBrowserLang = () =>
-    (navigator.languages && navigator.languages[0]) ||
-    navigator.language ||
-    "en-US";
-
-i18n.setLocale(getBrowserLang());
