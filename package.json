@@ -23,6 +23,7 @@
         "io-ts-codegen": "^0.4.5",
         "meteor": "meteor/meteor",
         "meteor-node-stubs": "^1.0.1",
+        "normalize.css": "^8.0.1",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
         "react-router": "^5.2.0",

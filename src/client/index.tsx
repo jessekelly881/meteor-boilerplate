@@ -15,6 +15,7 @@ import ForgotPassData, {
 } from "/src/common/types/forgotPassData";
 import "./serviceWorker.js";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import "normalize.css";
 
 import { AutoForm } from "uniforms-unstyled";
 import { Accounts } from "meteor/accounts-base";
