@@ -5,10 +5,10 @@
 
 ** Internationalization(i18n)
 - [X] Language selector
-- [] 100+ words(e,g. edit, delete, login, sognup, etc.) in:
+- [] 100+ words(e,g. edit, delete, login, signup, etc.) in:
     - English(US)
     - Spanish(MX)
-- [] Language settings synced between frontend and backend.
+- [X] Language settings synced between frontend and backend.
 
 
 ** Multiplatfirm
