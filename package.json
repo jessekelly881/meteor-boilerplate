@@ -15,7 +15,6 @@
   "dependencies": {
     "@babel/runtime": "^7.11.2",
     "@sinclair/typebox": "^0.10.1",
-    "@types/meteor-universe-i18n": "^1.14.5",
     "@types/react": "^16.9.49",
     "@types/react-dom": "^16.9.8",
     "ajv": "^6.12.5",
@@ -25,6 +24,7 @@
     "io-ts-codegen": "^0.4.5",
     "meteor": "meteor/meteor",
     "meteor-node-stubs": "^1.0.1",
+    "normalize.css": "^8.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router": "^5.2.0",
@@ -38,38 +38,11 @@
       "client": "src/client/index.tsx",
       "server": "src/server/index.ts"
     },
-    "dependencies": {
-      "@babel/runtime": "^7.11.2",
-      "@sinclair/typebox": "^0.10.1",
-      "@types/meteor-universe-i18n": "^1.14.5",
-      "@types/react": "^16.9.49",
-      "@types/react-dom": "^16.9.8",
-      "ajv": "^6.12.5",
-      "bcrypt": "^5.0.0",
-      "electron-packager": "^15.1.0",
-      "io-ts-codegen": "^0.4.5",
-      "meteor": "meteor/meteor",
-      "meteor-node-stubs": "^1.0.1",
-      "normalize.css": "^8.0.1",
-      "react": "^16.13.1",
-      "react-dom": "^16.13.1",
-      "react-router": "^5.2.0",
-      "react-router-dom": "^5.2.0",
-      "uniform": "^0.5.1",
-      "uniforms-bridge-json-schema": "^3.0.0-rc.5",
-      "uniforms-unstyled": "^3.0.0-rc.5"
-    },
-    "meteor": {
-      "mainModule": {
-        "client": "src/client/index.tsx",
-        "server": "src/server/index.ts"
-      },
-      "testModule": "tests/main.js"
-    },
-    "devDependencies": {
-      "electron": "6.1.7",
-      "electron-builder": "21.2.0",
-      "meteor-desktop": "^2.2.5"
-    }
+    "testModule": "tests/main.js"
+  },
+  "devDependencies": {
+    "electron": "6.1.7",
+    "electron-builder": "21.2.0",
+    "meteor-desktop": "^2.2.5"
   }
 }
