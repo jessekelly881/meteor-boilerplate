@@ -84,6 +84,15 @@ const AppRouter = () => (
     </Router>
 );
 
+const updateUserLocale = (locale: string): void =>
+    Meteor.users.update(Meteor.userId(), {
+        $set: {
+            profile: {
+                locale,
+            },
+        },
+    });
+
 const App = () => {
     const user = useTracker(() => Meteor.user());
 
@@ -93,13 +102,7 @@ const App = () => {
 
     i18n.onChangeLocale((locale: string) => {
         if (user) {
-            Meteor.users.update(Meteor.userId(), {
-                $set: {
-                    profile: {
-                        locale,
-                    },
-                },
-            });
+            updateUserLocale(locale);
         }
     });
 
@@ -107,7 +110,7 @@ const App = () => {
         <>
             <span>{user?.username || "Anon"}</span>
             <button onClick={Meteor.logout}>{t("logout")}</button>
-            &nbsp; Locale: {user?.profile?.locale}
+            &nbsp; Locale: {i18n.getLocale()}
             <select onChange={e => i18n.setLocale(e.target.value)}>
                 {getLangs().map((lang: Lang) => (
                     <option

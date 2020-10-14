@@ -6,6 +6,7 @@
 import "./trans/common/en-us.i18n.yml";
 import "./trans/common/es-mx.i18n.yml";
 
+import i18n from "meteor/universe:i18n";
 import { fromNullable, Option } from "fp-ts/Option";
 import { pipe } from "fp-ts/function";
 
@@ -40,3 +41,8 @@ export const browserLang = (): Option<String> =>
  * Returns the users language.
  */
 export const userLang = (): Option<String> => pipe("", fromNullable);
+
+// log language change events
+i18n.onChangeLocale((locale: string) => {
+    console.log("Language changed:", locale);
+});
