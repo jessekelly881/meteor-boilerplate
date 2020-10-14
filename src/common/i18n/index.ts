@@ -30,10 +30,13 @@ export const setLang = (lang: string) => false;
 
 /**
  * browserLang :: () => Option String
- * Returns the browser language as an Option type.
+ * Returns the browser language.
  */
 export const browserLang = (): Option<String> =>
-    pipe(
-        (navigator.languages && navigator.languages[0]) || navigator.language,
-        fromNullable,
-    );
+    pipe(navigator.languages[0] || navigator.language, fromNullable);
+
+/**
+ * userLang :: () => Option String
+ * Returns the users language.
+ */
+export const userLang = (): Option<String> => pipe("", fromNullable);

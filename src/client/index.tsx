@@ -86,9 +86,10 @@ const AppRouter = () => (
 
 const App = () => {
     const user = useTracker(() => Meteor.user());
-    const [locale, setLocale] = useState(i18n.getLocale());
 
-    i18n.onChangeLocale(setLocale);
+    if (user) {
+        i18n.setLocale(user?.profile?.locale);
+    }
 
     i18n.onChangeLocale((locale: string) => {
         if (user) {
@@ -106,10 +107,13 @@ const App = () => {
         <>
             <span>{user?.username || "Anon"}</span>
             <button onClick={Meteor.logout}>{t("logout")}</button>
-            &nbsp; Locale: {i18n.getLanguageNativeName(locale)}
+            &nbsp; Locale: {user?.profile?.locale}
             <select onChange={e => i18n.setLocale(e.target.value)}>
                 {getLangs().map((lang: Lang) => (
-                    <option key={lang.code} value={lang.code}>
+                    <option
+                        key={lang.code}
+                        selected={i18n.getLocale() == lang.code}
+                        value={lang.code}>
                         {lang.nativeName}
                     </option>
                 ))}
