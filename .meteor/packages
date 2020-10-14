@@ -26,5 +26,4 @@ force-ssl
 omega:meteor-desktop-watcher@=2.2.5
 omega:meteor-desktop-bundler@=2.2.5
 msavin:usercache
-omega:meteor-desktop-bundler
 universe:i18n
