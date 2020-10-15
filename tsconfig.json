@@ -5,6 +5,6 @@
     "compilerOptions": {
         "baseUrl": "./",
         "isolatedModules": true,
-        "paths": { "*": ["web_modules/.types/*"], "/*": ["/*"] }
+        "paths": { "*": ["web_modules/.types/*"], "/*": ["./*"] }
     }
 }
