@@ -7,10 +7,8 @@ import "./trans/common/en-us.i18n.yml";
 import "./trans/common/es-mx.i18n.yml";
 
 import i18n from "meteor/universe:i18n";
-import { fromNullable, Option } from "fp-ts/Option";
+import { fromNullable, Option, getOrElse } from "fp-ts/Option";
 import { pipe } from "fp-ts/function";
-
-const defaultLang = "en-US";
 
 export interface Lang {
     code: string;
@@ -18,23 +16,36 @@ export interface Lang {
 }
 
 /**
- * getLang :: () => String
- * Returns the language to use for translations, etc
+ * browserLang :: () => Option String
+ * Returns the browser language.
  */
-export const getLang = () => defaultLang;
+const browserLang = (): Option<String> =>
+    pipe(navigator.languages[0] || navigator.language, fromNullable);
+
+/**
+ * defaultLangStr :: () => string
+ * Default lang string. E.g. en-US. Should not be used directly.
+ * Used in defaultLang function.
+ */
+const defaultLangStr = () => "en-US";
+
+/**
+ * defaultLang :: () => string
+ * The default language to use for i18n.
+ */
+export const defaultLang = pipe(browserLang(), getOrElse(defaultLangStr));
+
+/**
+ * getUserLang :: () => String
+ * Returns the users language
+ */
+export const getUserLang = () => defaultLang;
 
 /**
  * setLang :: String -> IO
  * Attempts to set the current language.
  */
 export const setLang = (lang: string) => false;
-
-/**
- * browserLang :: () => Option String
- * Returns the browser language.
- */
-export const browserLang = (): Option<String> =>
-    pipe(navigator.languages[0] || navigator.language, fromNullable);
 
 /**
  * userLang :: () => Option String

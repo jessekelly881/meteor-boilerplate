@@ -20,9 +20,9 @@ import "normalize.css";
 import { AutoForm } from "uniforms-unstyled";
 import { Accounts } from "meteor/accounts-base";
 import i18n from "meteor/universe:i18n";
-import { Lang, getLang } from "/src/common/i18n";
+import { Lang, defaultLang } from "/src/common/i18n";
 
-console.log(getLang());
+console.log(defaultLang);
 const t = i18n.__;
 
 // getLangs :: () => String
@@ -98,6 +98,8 @@ const App = () => {
 
     if (user) {
         i18n.setLocale(user?.profile?.locale);
+    } else {
+        i18n.setLocale(defaultLang);
     }
 
     i18n.onChangeLocale((locale: string) => {
