@@ -13,7 +13,7 @@ import SignupData, {
 import ForgotPassData, {
     validator as forgotPassDataValidator,
 } from "/src/common/types/forgotPassData";
-import "./serviceWorker.js";
+import "./serviceWorker";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "normalize.css";
 
