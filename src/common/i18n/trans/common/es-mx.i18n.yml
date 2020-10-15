@@ -1,13 +1,66 @@
 ##
-# Nouns
+# System
 ##
-userName: Nombre de usario
-email: Coreo
+admin: Administración
+termsCond: Términos y condiciones
+welcome: Bienvenido
 
 ##
-# Verbs
+# User
 ##
+userName: Nombre de usario
+password: Contraseña
+name: Nombre
+fullName: Nombre completo
+email: Coreo
+phoneNumber: Número telefónico
+website: Sitio web
+settings: Configuración
+profile: Profil
+account: Cuenta
+myAccount: Mi cuenta
+language: Idioma
+
+##
+# Location
+##
+address: Dirección
+country: País
+city: Ciudad
+zip: CP
+
+##
+# Actions
+##
+edit: Editar
+delete: Borrar
+save: Guarar
+create: Crear
+reset: Reiniciar
+
 logout: Ciere session
 login: Iniciar
 signup: Signup es
 forgotPass: Olvide mi contrasena
+
+skip: Omitir
+next: Siguiente
+
+##
+# Action confirmations
+##
+yes: Si
+no: No
+cancel: Cancelar
+
+##
+# Feedback
+##
+error: Error
+success: Listo
+notFound: No encontrado
+loading: Cargando
+active: Activo
+inactive: Inactivo
+status: Estatus
+required: Necessario
