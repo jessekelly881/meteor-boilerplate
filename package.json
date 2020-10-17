@@ -22,6 +22,7 @@
     "ajv": "^6.12.5",
     "bcrypt": "^5.0.0",
     "electron-packager": "^15.1.0",
+    "fp-ts": "^2.8.4",
     "io-ts-codegen": "^0.4.5",
     "meteor": "meteor/meteor",
     "meteor-node-stubs": "^1.0.1",

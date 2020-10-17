@@ -1,7 +1,7 @@
 import { Meteor } from "meteor/meteor";
 import { init as startSessionTimeout } from "meteor/simonsimcity:client-session-timeout";
 import { useTracker } from "meteor/react-meteor-data";
-import React from "react";
+import React, { useState } from "react";
 import { render } from "react-dom";
 import { JSONSchemaBridge } from "uniforms-bridge-json-schema";
 import LoginData, {
@@ -19,6 +19,18 @@ import "normalize.css";
 
 import { AutoForm } from "uniforms-unstyled";
 import { Accounts } from "meteor/accounts-base";
+import i18n from "meteor/universe:i18n";
+import { Lang, defaultLang } from "/src/common/i18n";
+
+console.log(defaultLang);
+const t = i18n.__;
+
+// getLangs :: () => String
+const getLangs = (): Lang[] =>
+    i18n.getLanguages().map((code: String) => ({
+        code,
+        nativeName: i18n.getLanguageNativeName(code),
+    }));
 
 const loginSchema = new JSONSchemaBridge(LoginData, loginDataValidator);
 const signupSchema = new JSONSchemaBridge(SignupData, signupDataValidator);
@@ -36,7 +48,9 @@ const signup = ({ email, password }: SignupData) =>
         email,
         username: email,
         password,
-        profile: {},
+        profile: {
+            locale: i18n.getLocale(),
+        },
     });
 
 const forgotPass = ({ email }: ForgotPassData) =>
@@ -50,34 +64,65 @@ const AppRouter = () => (
                 <Link to="/login">Login</Link>
             </Route>
             <Route exact path="/login">
-                <h2>Login</h2>
+                <h2>{t("login")}</h2>
                 <AutoForm schema={loginSchema} onSubmit={login} />
-                <Link to="/signup">Signup</Link>
+                <Link to="/signup">{t("signup")}</Link>
                 &nbsp;
-                <Link to="/forgot-pass">Forgot pass</Link>
+                <Link to="/forgot-pass">{t("forgotPass")}</Link>
             </Route>
             <Route exact path="/signup">
-                <h2>Signup</h2>
+                <h2>{t("signup")}</h2>
                 <AutoForm schema={signupSchema} onSubmit={signup} />
-                <Link to="/login">Login</Link>
+                <Link to="/login">{t("login")}</Link>
             </Route>
             <Route exact path="/forgot-pass">
-                <h2>Forgot pass</h2>
+                <h2>{t("forgotPass")}</h2>
                 <AutoForm schema={forgotPassSchema} onSubmit={forgotPass} />
-                <Link to="/login">Login</Link>
+                <Link to="/login">{t("login")}</Link>
             </Route>
         </Switch>
     </Router>
 );
 
+const updateUserLocale = (locale: string): void =>
+    Meteor.users.update(Meteor.userId(), {
+        $set: {
+            profile: {
+                locale,
+            },
+        },
+    });
+
 const App = () => {
     const user = useTracker(() => Meteor.user());
+
+    if (user) {
+        i18n.setLocale(user?.profile?.locale);
+    } else {
+        i18n.setLocale(defaultLang);
+    }
+
+    i18n.onChangeLocale((locale: string) => {
+        if (user) {
+            updateUserLocale(locale);
+        }
+    });
 
     return (
         <>
             <span>{user?.username || "Anon"}</span>
-            &nbsp;
-            <button onClick={Meteor.logout}>Logout</button>
+            <button onClick={Meteor.logout}>{t("logout")}</button>
+            &nbsp; Locale: {i18n.getLocale()}
+            <select onChange={e => i18n.setLocale(e.target.value)}>
+                {getLangs().map((lang: Lang) => (
+                    <option
+                        key={lang.code}
+                        selected={i18n.getLocale() == lang.code}
+                        value={lang.code}>
+                        {lang.nativeName}
+                    </option>
+                ))}
+            </select>
             <hr />
             <AppRouter />
         </>

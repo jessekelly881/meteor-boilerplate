@@ -1,0 +1,13 @@
+##
+# Nouns
+##
+userName: Username
+email: Email
+
+##
+# Verbs
+##
+logout: Logout
+login: Login
+signup: Signup
+forgotPass: Forgot password
