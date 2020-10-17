@@ -13,6 +13,7 @@ import SignupData, {
 import ForgotPassData, {
     validator as forgotPassDataValidator,
 } from "/src/common/types/forgotPassData";
+import { createUser } from "/src/common/modules/auth";
 import "./serviceWorker";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "normalize.css";
@@ -39,17 +40,22 @@ const forgotPassSchema = new JSONSchemaBridge(
     forgotPassDataValidator,
 );
 
-const login = ({ email, password }): LoginData => {
+const login = ({ email, password }: LoginData): void => {
     Meteor.loginWithPassword(email, password, x => alert(JSON.stringify(x)));
 };
 
-const signup = ({ email, password }: SignupData) =>
-    Accounts.createUser({
+/**
+ * signup :: (SignupData, string) -> IO ()
+ * User signup function.
+ */
+const signup = ({ email, password, name }: SignupData, locale: string) =>
+    createUser({
         email,
         username: email,
         password,
         profile: {
-            locale: i18n.getLocale(),
+            name,
+            locale,
         },
     });
 
@@ -72,7 +78,12 @@ const AppRouter = () => (
             </Route>
             <Route exact path="/signup">
                 <h2>{t("signup")}</h2>
-                <AutoForm schema={signupSchema} onSubmit={signup} />
+                <AutoForm
+                    schema={signupSchema}
+                    onSubmit={(data: SignupData) =>
+                        signup(data, i18n.getLocale())
+                    }
+                />
                 <Link to="/login">{t("login")}</Link>
             </Route>
             <Route exact path="/forgot-pass">
