@@ -4,3 +4,4 @@ dist/
 version.desktop
 .desktop-installer
 .desktop-package
+yarn-error.log
