@@ -6,4 +6,4 @@ Accounts.config({
     sendVerificationEmail: true,
 });
 
-Accounts.emailTemplates.siteName = config.siteName();
+Accounts.emailTemplates.siteName = config.app.name;

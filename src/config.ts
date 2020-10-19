@@ -1,3 +1,8 @@
+const now = new Date();
+
 export default {
-    siteName: () => "Meteor boiler",
+    app: {
+        name: "Meteor boiler",
+        copyrightStr: `©v1Software ${now.getFullYear()}`,
+    },
 };

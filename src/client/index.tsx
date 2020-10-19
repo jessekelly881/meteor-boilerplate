@@ -16,6 +16,7 @@ import ForgotPassData, {
 import { createUser } from "/src/common/modules/auth";
 import "./serviceWorker";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import config from "/src/config";
 import "normalize.css";
 
 import { AutoForm } from "uniforms-unstyled";
@@ -133,6 +134,9 @@ const App = () => {
             </select>
             <hr />
             <AppRouter />
+            <br />
+            <br />
+            <span>{config.app.copyrightStr}</span>
         </>
     );
 };
