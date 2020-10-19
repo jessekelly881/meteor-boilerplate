@@ -16,6 +16,12 @@ export interface Lang {
 }
 
 /**
+ * t
+ * Alias for i18n.__ from meteor/universe:i18n.__
+ */
+export const t = i18n.__;
+
+/**
  * browserLang :: () => Option String
  * Returns the browser language.
  */
