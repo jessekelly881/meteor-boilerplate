@@ -20,7 +20,7 @@ import "normalize.css";
 
 import { AutoForm } from "uniforms-unstyled";
 import { Accounts } from "meteor/accounts-base";
-import i18n from "meteor/universe:i18n";
+import { i18n } from "meteor/universe:i18n";
 import { Lang, defaultLang, t } from "/src/common/i18n";
 
 // getLangs :: () => String

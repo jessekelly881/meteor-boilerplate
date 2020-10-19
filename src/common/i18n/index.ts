@@ -6,7 +6,7 @@
 import "./trans/common/en-us.i18n.yml";
 import "./trans/common/es-mx.i18n.yml";
 
-import i18n from "meteor/universe:i18n";
+import { i18n } from "meteor/universe:i18n";
 import { fromNullable, Option, getOrElse } from "fp-ts/Option";
 import { pipe } from "fp-ts/function";
 
@@ -17,7 +17,7 @@ export interface Lang {
 
 /**
  * t
- * Alias for i18n.__ from meteor/universe:i18n.__
+ * Alias for i18n.__ from meteor/universe:i18n
  */
 export const t = i18n.__;
 
