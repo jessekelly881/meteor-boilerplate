@@ -24,9 +24,9 @@ import { Accounts } from "meteor/accounts-base";
 import { i18n } from "meteor/universe:i18n";
 import { Lang, defaultLang, t } from "/src/common/i18n";
 
-// getLangs :: () => String
+// getLangs :: () => string
 const getLangs = (): Lang[] =>
-    i18n.getLanguages().map((code: String) => ({
+    i18n.getLanguages().map((code: string) => ({
         code,
         nativeName: i18n.getLanguageNativeName(code),
     }));
