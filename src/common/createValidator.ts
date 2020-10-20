@@ -2,6 +2,10 @@ import Ajv from "ajv";
 
 const ajv = new Ajv({ allErrors: true, useDefaults: true });
 
+/**
+ * createValidator
+ * @desc Given a JSON schema, returns a validator for the schema.
+ */
 function createValidator(schema: object) {
     const validator = ajv.compile(schema);
 
