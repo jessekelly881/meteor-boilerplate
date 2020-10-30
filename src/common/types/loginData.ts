@@ -1,9 +1,9 @@
-import createValidator from "../createValidator";
-import { Type, Static } from "@sinclair/typebox";
+import { Type, Static } from '@sinclair/typebox';
+import createValidator from '../createValidator';
 
 const LoginData = Type.Object({
-    email: Type.String({ format: "email" }),
-    password: Type.String(),
+  email: Type.String({ format: 'email' }),
+  password: Type.String(),
 });
 
 type LoginData = Static<typeof LoginData>;

@@ -2,36 +2,36 @@
  * @module i18n
  */
 
-import "./trans/common/en-us.i18n.yml";
-import "./trans/common/es-mx.i18n.yml";
+import './trans/common/en-us.i18n.yml';
+import './trans/common/es-mx.i18n.yml';
 
-import { i18n } from "meteor/universe:i18n";
-import { fromNullable, Option, getOrElse } from "fp-ts/Option";
-import { pipe } from "fp-ts/function";
+import { i18n } from 'meteor/universe:i18n';
+import { fromNullable, Option, getOrElse } from 'fp-ts/Option';
+import { pipe } from 'fp-ts/function';
 
 export interface Lang {
-    code: string;
-    nativeName: string;
+  code: string;
+  nativeName: string;
 }
 
 /**
  * t
  * @desc Alias for i18n.__ from meteor/universe:i18n
  */
-export const t = i18n.__;
+export const { __: t } = i18n;
 
 /**
  * browserLang :: () => Option String
  * @desc Returns the browser language.
  */
 const browserLang = (): Option<String> =>
-    pipe(navigator.languages[0] || navigator.language, fromNullable);
+  pipe(navigator.languages[0] || navigator.language, fromNullable);
 
 /**
  * defaultLangStr :: () => string
  * @desc Default lang string. E.g. en-US. Should not be used directly. Used in defaultLang function.
  */
-const defaultLangStr = () => "en-US";
+const defaultLangStr = () => 'en-US';
 
 /**
  * defaultLang :: () => string
@@ -49,15 +49,15 @@ export const getUserLang = () => defaultLang;
  * setLang :: String -> IO
  * @desc Attempts to set the current language.
  */
-export const setLang = (lang: string) => false;
+export const setLang = () => false;
 
 /**
  * userLang :: () => Option String
  * @desc Returns the users language.
  */
-export const userLang = (): Option<String> => pipe("", fromNullable);
+export const userLang = (): Option<String> => pipe('', fromNullable);
 
 // log language change events
 i18n.onChangeLocale((locale: string) => {
-    console.log("Language changed:", locale);
+  console.log('Language changed:', locale);
 });

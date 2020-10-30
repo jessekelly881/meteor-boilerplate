@@ -2,16 +2,16 @@
  * @module auth
  * @desc App authentication module.
  */
-import { Accounts } from "meteor/accounts-base";
+import { Accounts } from 'meteor/accounts-base';
 
 export interface User {
-    email: string;
-    password: string;
-    username: string;
-    profile: {
-        name: string;
-        locale: string;
-    };
+  email: string;
+  password: string;
+  username: string;
+  profile: {
+    name: string;
+    locale: string;
+  };
 }
 
 /**

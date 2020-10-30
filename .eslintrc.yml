@@ -1,0 +1,58 @@
+plugins:
+    - prettier
+    - sonarjs # https://github.com/SonarSource/eslint-plugin-sonarjs
+    - "@typescript-eslint"
+    - meteor
+
+extends:
+    - "airbnb-typescript"
+    - "plugin:import/errors"
+    - "plugin:sonarjs/recommended"
+    - "prettier"
+    - "plugin:meteor/recommended"
+
+env:
+    browser: true
+    es6: true
+    node: true
+
+rules:
+    no-use-before-define: 1
+    no-redeclare: 0
+    "@typescript-eslint/no-redeclare": 0
+    react/react-in-jsx-scope: 0
+    react/jsx-indent: 0 # ignore, handled by prettier
+    react/jsx-indent-props: 0 # ignore, handled by prettier
+    react/jsx-closing-bracket-location: 0 # ignore, handled by prettier
+    react/jsx-curly-newline: 0 # ignore, handled by prettier
+    no-undef: 0
+    import/no-absolute-path: 0 #TODO: paths starting with / are ok until a work around is found
+    no-extend-native: 0
+    import/no-unresolved: ["error", { "ignore": ["^meteor/"] }]
+
+    import/extensions:
+        [2, { "js": "never", "jsx": "never", "ts": "never", "tsx": "never" }]
+
+    react/jsx-filename-extension:
+        [2, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }]
+
+parser: "@typescript-eslint/parser"
+
+parserOptions:
+    project: "./tsconfig.json"
+
+settings:
+    import/core-modules:
+        - meteor/meteor
+        - meteor/accounts-base
+        - meteor/mongo
+
+    import/resolver:
+        alias:
+            extensions:
+                - .js
+                - .jsx
+                - .ts
+                - .tsx
+            map:
+                - ["/src", "./src"]
