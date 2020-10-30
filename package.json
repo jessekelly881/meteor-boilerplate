@@ -45,6 +45,7 @@
         "eslint-plugin-sonarjs": "^0.5.0",
         "eslint_d": "^9.1.2",
         "fp-ts": "^2.8.5",
+        "husky": "^4.3.0",
         "io-ts-codegen": "^0.4.5",
         "meteor": "meteor/meteor",
         "meteor-node-stubs": "^1.0.1",
