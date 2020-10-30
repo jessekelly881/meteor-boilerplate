@@ -6,3 +6,4 @@ version.desktop
 .desktop-package
 yarn-error.log
 docs
+meteor.log
