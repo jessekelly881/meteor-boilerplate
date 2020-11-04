@@ -5,8 +5,8 @@
         "start": "meteor run",
         "start:desktop": "meteor-desktop -b",
         "start:android": "meteor run android-device",
-        "build": "meteor build --directory dist --server=https://localhost:3000",
-        "build:desktop": "meteor-desktop build-installer -b",
+        "build": "npm run clean; meteor build --directory dist --server=https://localhost:3000",
+        "build:desktop": "npm run clean; meteor-desktop build-installer -b",
         "clean": "shx rm -rf dist",
         "test:lint": "eslint --fix --cache \"src/**/*.{js,jsx,ts,tsx}\"",
         "test:quick": "run-p --aggregate-output test:lint",
@@ -19,6 +19,7 @@
     "dependencies": {
         "@babakness/exhaustive-type-checking": "^0.1.3",
         "@babel/runtime": "^7.12.1",
+        "@commitlint/config-conventional": "^11.0.0",
         "@sinclair/typebox": "^0.10.1",
         "@types/meteor": "^1.4.62",
         "@types/meteor-universe-i18n": "^1.14.5",
@@ -30,6 +31,7 @@
         "ajv": "^6.12.6",
         "bcrypt": "^5.0.0",
         "better-docs": "^2.3.2",
+        "commitlint": "^11.0.0",
         "date-fns": "^2.16.1",
         "electron-packager": "^15.1.0",
         "eslint": "^7.12.1",
@@ -57,6 +59,7 @@
         "react-router": "^5.2.0",
         "react-router-dom": "^5.2.0",
         "run-p": "^0.0.0",
+        "run-s": "^0.0.0",
         "shx": "^0.3.3",
         "uniform": "^0.5.1",
         "uniforms-bridge-json-schema": "^3.0.0-rc.5",
@@ -65,7 +68,8 @@
     "husky": {
         "hooks": {
             "pre-commit": "run-p test:quick",
-            "pre-push": "run-p test"
+            "pre-push": "run-p test",
+            "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
         }
     },
     "meteor": {
