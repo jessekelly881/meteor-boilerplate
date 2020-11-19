@@ -1,7 +1,7 @@
+import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { init as startSessionTimeout } from 'meteor/simonsimcity:client-session-timeout';
 import { useTracker } from 'meteor/react-meteor-data';
-import React from 'react';
 import { render } from 'react-dom';
 import { JSONSchemaBridge } from 'uniforms-bridge-json-schema';
 import LoginData, {
@@ -17,12 +17,16 @@ import { createUser } from '/src/common/modules/auth';
 import './serviceWorker';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import config from '/src/config';
+import { tags } from 'react-ts-fns';
+import { loginLink, signupLink } from './router';
 import 'normalize.css';
 
 import { AutoForm } from 'uniforms-unstyled';
 import { Accounts } from 'meteor/accounts-base';
 import { i18n } from 'meteor/universe:i18n';
 import { Lang, defaultLang, t } from '/src/common/i18n';
+
+const { h2, hr, span, br } = tags;
 
 // getLangs :: () => string
 const getLangs = (): Lang[] =>
@@ -60,7 +64,7 @@ const signup = ({ email, password, name }: SignupData, locale: string) =>
 const forgotPass = ({ email }: ForgotPassData) =>
   Accounts.forgotPassword({ email });
 
-const AppRouter = () => (
+const appRouter = () => (
     <Router>
         <Switch>
             <Route exact path="/">
@@ -68,24 +72,24 @@ const AppRouter = () => (
                 <Link to="/login">Login</Link>
             </Route>
             <Route exact path="/login">
-                <h2>{t('login')}</h2>
+                {h2(t('login'))}
                 <AutoForm schema={loginSchema} onSubmit={login} />
-                <Link to="/signup">{t('signup')}</Link>
+                {signupLink(t('signup'))}
                 &nbsp;
                 <Link to="/forgot-pass">{t('forgotPass')}</Link>
             </Route>
             <Route exact path="/signup">
-                <h2>{t('signup')}</h2>
+                {h2(t('signup'))}
                 <AutoForm
                     schema={signupSchema}
                     onSubmit={(data: SignupData) =>
                       signup(data, i18n.getLocale())
                     }
                 />
-                <Link to="/login">{t('login')}</Link>
+                {loginLink(t('login'))}
             </Route>
             <Route exact path="/forgot-pass">
-                <h2>{t('forgotPass')}</h2>
+                {h2(t('forgotPass'))}
                 <AutoForm schema={forgotPassSchema} onSubmit={forgotPass} />
                 <Link to="/login">{t('login')}</Link>
             </Route>
@@ -136,11 +140,7 @@ const App = () => {
                     </option>
                 ))}
             </select>
-            <hr />
-            <AppRouter />
-            <br />
-            <br />
-            <span>{config.app.copyrightStr}</span>
+            {[hr(), appRouter(), br(), br(), span(config.app.copyrightStr)]}
         </>
   );
 };

@@ -1,15 +1,8 @@
-import { matchConfig } from '@babakness/exhaustive-type-checking';
+import { Link } from "react-router-dom";
+import { h } from "react-ts-fns";
+import Routes from "/src/common/routes";
 
-/**
- * AppRoute
- * @desc Routes within the app.
- * @enum {string}
- */
-export enum AppRoute {
-  login = '/auth/login',
-  signup = '/auth/signup',
-  forgotPass = '/auth/forgotPass',
-  validateEmail = '/auth/validateEmail',
-}
+export const link = h.bind(null, Link);
 
-export const matchAppRoute = matchConfig<AppRoute>();
+export const loginLink = link.bind(null, { to: Routes.login });
+export const signupLink = link.bind(null, { to: Routes.signup });
