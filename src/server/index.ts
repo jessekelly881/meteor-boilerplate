@@ -8,3 +8,6 @@ Accounts.config({
 });
 
 Accounts.emailTemplates.siteName = config.app.name;
+Accounts.emailTemplates.verifyEmail.subject = () => 'Verify email address';
+Accounts.emailTemplates.verifyEmail.html = (user, url: string) =>
+  `<strong>${url}</strong>`;

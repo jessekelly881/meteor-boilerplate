@@ -18,13 +18,15 @@ import './serviceWorker';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import config from '/src/config';
 import { tags } from 'react-ts-fns';
-import { loginLink, signupLink } from './router';
+import { links } from '/src/client/router';
 import 'normalize.css';
 
 import { AutoForm } from 'uniforms-unstyled';
 import { Accounts } from 'meteor/accounts-base';
 import { i18n } from 'meteor/universe:i18n';
 import { Lang, defaultLang, t } from '/src/common/i18n';
+
+const { login: loginLink, signup: signupLink } = links;
 
 const { h2, hr, span, br } = tags;
 
