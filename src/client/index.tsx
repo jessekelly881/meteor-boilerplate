@@ -15,10 +15,10 @@ import ForgotPassData, {
 } from '/src/common/types/forgotPassData';
 import { createUser } from '/src/common/modules/auth';
 import './serviceWorker';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import config from '/src/config';
 import { tags } from 'react-ts-fns';
-import { links } from '/src/client/router';
+import { links, mappedRouter } from '/src/client/router';
+import Routes, { matchRoutes } from '/src/common/routes';
 import 'normalize.css';
 
 import { AutoForm } from 'uniforms-unstyled';
@@ -26,9 +26,13 @@ import { Accounts } from 'meteor/accounts-base';
 import { i18n } from 'meteor/universe:i18n';
 import { Lang, defaultLang, t } from '/src/common/i18n';
 
-const { login: loginLink, signup: signupLink } = links;
+const {
+  login: loginLink,
+  signup: signupLink,
+  forgotPass: forgotPassLink,
+} = links;
 
-const { h2, hr, span, br } = tags;
+const { h2, hr, span, br, div } = tags;
 
 // getLangs :: () => string
 const getLangs = (): Lang[] =>
@@ -66,38 +70,43 @@ const signup = ({ email, password, name }: SignupData, locale: string) =>
 const forgotPass = ({ email }: ForgotPassData) =>
   Accounts.forgotPassword({ email });
 
-const appRouter = () => (
-    <Router>
-        <Switch>
-            <Route exact path="/">
-                <span>Home</span>
-                <Link to="/login">Login</Link>
-            </Route>
-            <Route exact path="/login">
-                {h2(t('login'))}
-                <AutoForm schema={loginSchema} onSubmit={login} />
-                {signupLink(t('signup'))}
-                &nbsp;
-                <Link to="/forgot-pass">{t('forgotPass')}</Link>
-            </Route>
-            <Route exact path="/signup">
-                {h2(t('signup'))}
-                <AutoForm
-                    schema={signupSchema}
-                    onSubmit={(data: SignupData) =>
-                      signup(data, i18n.getLocale())
-                    }
-                />
-                {loginLink(t('login'))}
-            </Route>
-            <Route exact path="/forgot-pass">
-                {h2(t('forgotPass'))}
-                <AutoForm schema={forgotPassSchema} onSubmit={forgotPass} />
-                {loginLink(t('login'))}
-            </Route>
-        </Switch>
-    </Router>
-);
+const loginPage = () =>
+  div([
+    h2(t('login')),
+        <AutoForm schema={loginSchema} onSubmit={login} />,
+        signupLink(t('signup')),
+        forgotPassLink(t('forgotPass')),
+  ]);
+
+const welcomePage = () =>
+  div([span(t('Welcome!')), br(), loginLink(t('login'))]);
+
+const signupPage = () =>
+  div([
+    h2(t('signup')),
+        <AutoForm
+            schema={signupSchema}
+            onSubmit={(data: SignupData) => signup(data, i18n.getLocale())}
+        />,
+        loginLink(t('login')),
+  ]);
+
+const forgotPassPage = () =>
+  div([
+    h2(t('forgotPass')),
+        <AutoForm schema={forgotPassSchema} onSubmit={forgotPass} />,
+        loginLink(t('login')),
+  ]);
+
+const appRouter = () =>
+  mappedRouter(
+    matchRoutes({
+      [Routes.login]: () => loginPage,
+      [Routes.signup]: () => signupPage,
+      [Routes.forgotPass]: () => forgotPassPage,
+      [Routes.validateEmail]: () => welcomePage,
+    }),
+  );
 
 const updateUserLocale = (locale: string): void =>
   Meteor.users.update(Meteor.userId(), {
