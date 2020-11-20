@@ -84,6 +84,7 @@
         "electron": "6.1.7",
         "electron-builder": "21.2.0",
         "eslint-plugin-meteor": "^7.2.1",
-        "meteor-desktop": "^2.2.5"
+        "meteor-desktop": "^2.2.5",
+        "ts-toolbelt": "^8.0.7"
     }
 }
