@@ -1,30 +1,30 @@
-import React from 'react';
-import { Meteor } from 'meteor/meteor';
-import { init as startSessionTimeout } from 'meteor/simonsimcity:client-session-timeout';
-import { useTracker } from 'meteor/react-meteor-data';
-import { render } from 'react-dom';
-import { JSONSchemaBridge } from 'uniforms-bridge-json-schema';
+import React from "react";
+import { Meteor } from "meteor/meteor";
+import { init as startSessionTimeout } from "meteor/simonsimcity:client-session-timeout";
+import { useTracker } from "meteor/react-meteor-data";
+import { render } from "react-dom";
+import { JSONSchemaBridge } from "uniforms-bridge-json-schema";
 import LoginData, {
-  validator as loginDataValidator,
-} from '/src/common/types/loginData';
+    validator as loginDataValidator,
+} from "/src/common/types/loginData";
 import SignupData, {
-  validator as signupDataValidator,
-} from '/src/common/types/signupData';
+    validator as signupDataValidator,
+} from "/src/common/types/signupData";
 import ForgotPassData, {
-  validator as forgotPassDataValidator,
-} from '/src/common/types/forgotPassData';
-import { createUser } from '/src/common/modules/auth';
-import './serviceWorker';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import config from '/src/config';
-import { tags } from 'react-ts-fns';
-import { links } from '/src/client/router';
-import 'normalize.css';
+    validator as forgotPassDataValidator,
+} from "/src/common/types/forgotPassData";
+import { createUser } from "/src/common/modules/auth";
+import "./serviceWorker";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import config from "/src/config";
+import { tags } from "react-ts-fns";
+import { links } from "/src/client/router";
+import "normalize.css";
 
-import { AutoForm } from 'uniforms-unstyled';
-import { Accounts } from 'meteor/accounts-base';
-import { i18n } from 'meteor/universe:i18n';
-import { Lang, defaultLang, t } from '/src/common/i18n';
+import { AutoForm } from "uniforms-unstyled";
+import { Accounts } from "meteor/accounts-base";
+import { i18n } from "meteor/universe:i18n";
+import { Lang, defaultLang, t } from "/src/common/i18n";
 
 const { login: loginLink, signup: signupLink } = links;
 
@@ -32,20 +32,20 @@ const { h2, hr, span, br } = tags;
 
 // getLangs :: () => string
 const getLangs = (): Lang[] =>
-  i18n.getLanguages().map((code: string) => ({
-    code,
-    nativeName: i18n.getLanguageNativeName(code),
-  }));
+    i18n.getLanguages().map((code: string) => ({
+        code,
+        nativeName: i18n.getLanguageNativeName(code),
+    }));
 
 const loginSchema = new JSONSchemaBridge(LoginData, loginDataValidator);
 const signupSchema = new JSONSchemaBridge(SignupData, signupDataValidator);
 const forgotPassSchema = new JSONSchemaBridge(
-  ForgotPassData,
-  forgotPassDataValidator,
+    ForgotPassData,
+    forgotPassDataValidator,
 );
 
 const login = ({ email, password }: LoginData): void => {
-  Meteor.loginWithPassword(email, password, x => alert(JSON.stringify(x)));
+    Meteor.loginWithPassword(email, password, x => alert(JSON.stringify(x)));
 };
 
 /**
@@ -53,18 +53,18 @@ const login = ({ email, password }: LoginData): void => {
  * User signup function.
  */
 const signup = ({ email, password, name }: SignupData, locale: string) =>
-  createUser({
-    email,
-    username: email,
-    password,
-    profile: {
-      name,
-      locale,
-    },
-  });
+    createUser({
+        email,
+        username: email,
+        password,
+        profile: {
+            name,
+            locale,
+        },
+    });
 
 const forgotPass = ({ email }: ForgotPassData) =>
-  Accounts.forgotPassword({ email });
+    Accounts.forgotPassword({ email });
 
 const appRouter = () => (
     <Router>
@@ -74,64 +74,62 @@ const appRouter = () => (
                 <Link to="/login">Login</Link>
             </Route>
             <Route exact path="/login">
-                {h2(t('login'))}
+                {h2(t("login"))}
                 <AutoForm schema={loginSchema} onSubmit={login} />
-                {signupLink(t('signup'))}
+                {signupLink(t("signup"))}
                 &nbsp;
-                <Link to="/forgot-pass">{t('forgotPass')}</Link>
+                <Link to="/forgot-pass">{t("forgotPass")}</Link>
             </Route>
             <Route exact path="/signup">
-                {h2(t('signup'))}
+                {h2(t("signup"))}
                 <AutoForm
                     schema={signupSchema}
                     onSubmit={(data: SignupData) =>
-                      signup(data, i18n.getLocale())
+                        signup(data, i18n.getLocale())
                     }
                 />
-                {loginLink(t('login'))}
+                {loginLink(t("login"))}
             </Route>
             <Route exact path="/forgot-pass">
-                {h2(t('forgotPass'))}
+                {h2(t("forgotPass"))}
                 <AutoForm schema={forgotPassSchema} onSubmit={forgotPass} />
-                {loginLink(t('login'))}
+                {loginLink(t("login"))}
             </Route>
         </Switch>
     </Router>
 );
 
 const updateUserLocale = (locale: string): void =>
-  Meteor.users.update(Meteor.userId(), {
-    $set: {
-      profile: {
-        locale,
-      },
-    },
-  });
+    Meteor.users.update(Meteor.userId(), {
+        $set: {
+            profile: {
+                locale,
+            },
+        },
+    });
 
 const App = () => {
-  const user = useTracker(() => Meteor.user());
+    const user = useTracker(() => Meteor.user());
 
-  if (user) {
-    i18n.setLocale(user?.profile?.locale);
-  } else {
-    i18n.setLocale(defaultLang);
-  }
-
-  i18n.onChangeLocale((locale: string) => {
     if (user) {
-      updateUserLocale(locale);
+        i18n.setLocale(user?.profile?.locale);
+    } else {
+        i18n.setLocale(defaultLang);
     }
-  });
 
-  return (
+    i18n.onChangeLocale((locale: string) => {
+        if (user) {
+            updateUserLocale(locale);
+        }
+    });
+
+    return (
         <>
-            <span>{user?.username || 'Anon'}</span>
+            <span>{user?.username || "Anon"}</span>
             <button type="button" onClick={Meteor.logout}>
-                {t('logout')}
+                {t("logout")}
             </button>
-            &nbsp; Locale: 
-{' '}
-{i18n.getLocale()}
+            &nbsp; Locale: {i18n.getLocale()}
             <select onChange={e => i18n.setLocale(e.target.value)}>
                 {getLangs().map((lang: Lang) => (
                     <option
@@ -144,11 +142,11 @@ const App = () => {
             </select>
             {[hr(), appRouter(), br(), br(), span(config.app.copyrightStr)]}
         </>
-  );
+    );
 };
 
 Meteor.startup(() => {
-  render(<App />, document.getElementById('app'));
+    render(<App />, document.getElementById("app"));
 });
 
 // Enable session timeout
