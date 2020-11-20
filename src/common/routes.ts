@@ -1,4 +1,4 @@
-import { matchConfig } from "@babakness/exhaustive-type-checking";
+import { matchConfig } from '@babakness/exhaustive-type-checking';
 
 /**
  * Routes
@@ -6,10 +6,10 @@ import { matchConfig } from "@babakness/exhaustive-type-checking";
  * @enum {string}
  */
 enum Routes {
-    login = "/login",
-    signup = "/signup",
-    forgotPass = "/forgotPass",
-    validateEmail = "/validateEmail",
+  login = '/login',
+  signup = '/signup',
+  forgotPass = '/forgotPass',
+  validateEmail = '/validateEmail',
 }
 
 export const matchRoutes = matchConfig<Routes>();

@@ -91,7 +91,7 @@ const appRouter = () => (
             <Route exact path="/forgot-pass">
                 {h2(t('forgotPass'))}
                 <AutoForm schema={forgotPassSchema} onSubmit={forgotPass} />
-                <Link to="/login">{t('login')}</Link>
+                {loginLink(t('login'))}
             </Route>
         </Switch>
     </Router>

@@ -1,8 +1,11 @@
-import { Link } from "react-router-dom";
-import { h } from "react-ts-fns";
-import Routes from "/src/common/routes";
+import { NavLink } from 'react-router-dom';
+import { h } from 'react-ts-fns';
+import Routes from '/src/common/routes';
 
-export const link = h.bind(null, Link);
+const link = (to: Routes) => (
+  children: ReturnType<typeof h>,
+  props: Object = {},
+) => h(NavLink, { to, ...props }, children);
 
-export const loginLink = link.bind(null, { to: Routes.login });
-export const signupLink = link.bind(null, { to: Routes.signup });
+export const loginLink = link(Routes.login);
+export const signupLink = link(Routes.signup);
