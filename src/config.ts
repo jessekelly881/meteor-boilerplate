@@ -1,8 +1,13 @@
 const now = new Date();
 
 export default {
-  app: {
-    name: 'Meteor boiler',
-    copyrightStr: `©v1Software ${now.getFullYear()}`,
-  },
+    rootUrl: process.env.ROOT_URL,
+    copyright: `Copyright © ${now.getFullYear()} v1Software `,
+    support: {
+        email: "kellyjesse881@gmail.com",
+        phoneNumber: "18001111111",
+    },
+    app: {
+        name: "Meteor boiler",
+    },
 };
