@@ -16,7 +16,7 @@ import ForgotPassData, {
 import { createUser } from '/src/common/modules/auth';
 import './serviceWorker';
 import config from '/src/config';
-import { tags } from 'react-ts-fns';
+import { tags, h } from 'react-ts-fns';
 import { links, mappedRouter } from '/src/client/router';
 import Routes, { matchRoutes } from '/src/common/routes';
 import 'normalize.css';
@@ -32,7 +32,7 @@ const {
   forgotPass: forgotPassLink,
 } = links;
 
-const { h2, hr, span, br, div } = tags;
+const { h2, hr, span, br, div, button, select, option } = tags;
 
 // getLangs :: () => string
 const getLangs = (): Lang[] =>
@@ -117,14 +117,10 @@ const updateUserLocale = (locale: string): void =>
     },
   });
 
-const App = () => {
+const app = () => {
   const user = useTracker(() => Meteor.user());
 
-  if (user) {
-    i18n.setLocale(user?.profile?.locale);
-  } else {
-    i18n.setLocale(defaultLang);
-  }
+  i18n.setLocale(user?.profile?.locale || defaultLang);
 
   i18n.onChangeLocale((locale: string) => {
     if (user) {
@@ -132,32 +128,32 @@ const App = () => {
     }
   });
 
-  return (
-        <>
-            <span>{user?.username || 'Anon'}</span>
-            <button type="button" onClick={Meteor.logout}>
-                {t('logout')}
-            </button>
-            &nbsp; Locale: 
-{' '}
-{i18n.getLocale()}
-            <select onChange={e => i18n.setLocale(e.target.value)}>
-                {getLangs().map((lang: Lang) => (
-                    <option
-                        key={lang.code}
-                        selected={i18n.getLocale() === lang.code}
-                        value={lang.code}>
-                        {lang.nativeName}
-                    </option>
-                ))}
-            </select>
-            {[hr(), appRouter(), br(), br(), span(config.copyright)]}
-        </>
-  );
+  return [
+    span(user?.username || 'Anon'),
+    button({ onClick: Meteor.logout }, t('logout')),
+    select(
+      { onChange: e => i18n.setLocale(e.target.value) },
+      getLangs().map((lang: Lang) =>
+        option(
+          {
+            key: lang.code,
+            selected: i18n.getLocale() === lang.code,
+            value: lang.code,
+          },
+          lang.nativeName,
+        ),
+      ),
+    ),
+    hr(),
+    appRouter(),
+    br(),
+    br(),
+    span(config.copyright),
+  ];
 };
 
 Meteor.startup(() => {
-  render(<App />, document.getElementById('app'));
+  render(h(app), document.getElementById('app'));
 });
 
 // Enable session timeout
